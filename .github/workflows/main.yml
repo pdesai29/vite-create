@@ -1,4 +1,4 @@
-name: Update create-vite in starter
+name: Update create-vite 
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
       - name: Copy create-vite changes to starter repository
         run: |
           mkdir -p packages
-          cp -r ../packages/create-vite packages/
+          cp -r packages/create-vite packages/
 
       - name: Commit changes
         run: |
