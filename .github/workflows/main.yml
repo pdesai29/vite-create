@@ -41,3 +41,5 @@ jobs:
 
       - name: Push changes to starter repository
         run: git push origin update-create-vite:main
+        env:
+          ACCESS_TOKEN: ${{ secrets.TOKEN }}
