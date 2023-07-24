@@ -1,4 +1,4 @@
-name: Update create-vite
+name: Update create-vite in starter
 
 on:
   push:
@@ -15,14 +15,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Sync create-vite changes from vitejs/vite repository
+      - name: Set up Git user
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@users.noreply.github.com"
-          git remote add upstream https://github.com/vitejs/vite.git
-          git fetch upstream main
-          git checkout -b update-create-vite upstream/main -- packages/create-vite
-          git checkout main
-          git merge update-create-vite --no-commit --no-ff
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/vitejs/vite.git
+
+      - name: Fetch upstream main branch
+        run: git fetch upstream main
+
+      - name: Create and checkout update-create-vite branch
+        run: git checkout -b update-create-vite upstream/main
+
+      - name: Copy create-vite changes to starter repository
+        run: |
+          mkdir -p packages
+          cp -r ../packages/create-vite packages/
+
+      - name: Commit changes
+        run: |
+          git add .
           git commit -m "Update create-vite from vitejs/vite repository"
-          git push origin main
+
+      - name: Push changes to starter repository
+        run: git push origin update-create-vite:main
