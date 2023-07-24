@@ -1,4 +1,4 @@
-name: Update create-vite
+name: Update create-vite 
 
 on:
   push:
@@ -26,13 +26,16 @@ jobs:
       - name: Fetch upstream main branch
         run: git fetch upstream main
 
-      - name: Create and checkout update-create-vite branch
-        run: git checkout -b update-create-vite upstream/main -- packages/create-vite
+      - name: Create update-create-vite branch
+        run: git branch update-create-vite upstream/main
+
+      - name: Checkout update-create-vite branch
+        run: git checkout update-create-vite
 
       - name: Copy create-vite changes to starter repository
         run: |
           mkdir -p packages
-          cp -r packages/create-vite/* packages/
+          cp -r ../vite/packages/create-vite/* packages/
 
       - name: Commit changes
         run: |
